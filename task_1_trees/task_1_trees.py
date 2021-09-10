@@ -15,9 +15,15 @@ class SimpleTree:
         ParentNode.Children.append(NewChild)
         NewChild.parent = ParentNode
 
-        pass  # ваш код добавления нового дочернего узла существующему ParentNode
-
     def DeleteNode(self, NodeToDelete):
+        for child in NodeToDelete.Children:
+            if child.Children:
+                child.Children.clear()
+
+            child.Parent = None
+
+
+
         pass  # ваш код удаления существующего узла NodeToDelete
 
     def GetAllNodes(self):
