@@ -12,6 +12,9 @@ class SimpleTree:
         self.Root = root  # корень, может быть None
 
     def AddChild(self, ParentNode, NewChild):
+        ParentNode.Children.append(NewChild)
+        NewChild.parent = ParentNode
+
         pass  # ваш код добавления нового дочернего узла существующему ParentNode
 
     def DeleteNode(self, NodeToDelete):
