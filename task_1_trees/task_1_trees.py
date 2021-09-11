@@ -13,36 +13,43 @@ class SimpleTree:
 
     def AddChild(self, ParentNode, NewChild):
         ParentNode.Children.append(NewChild)
-        NewChild.parent = ParentNode
+        NewChild.Parent = ParentNode
 
     def DeleteNode(self, NodeToDelete):
-        for child in NodeToDelete.Children:
-            if child.Children:
-                child.Children.clear()
-
-            child.Parent = None
-
-
-
-        pass  # ваш код удаления существующего узла NodeToDelete
+        try:
+            NodeToDelete.Children.clear()
+            NodeToDelete.Parent.Children.remove(NodeToDelete)
+            NodeToDelete.Parent = None
+        except (ValueError, AttributeError) as errors:
+            return
 
     def GetAllNodes(self):
-        # ваш код выдачи всех узлов дерева в определённом порядке
-        return []
+        nodes = [self.Root, ]
+        for node in nodes:
+            if node.Children:
+                nodes.extend(node.Children)
+
+        return nodes
 
     def FindNodesByValue(self, val):
-        # ваш код поиска узлов по значению
-        return []
+        nodes = self.GetAllNodes()
+        nodes_by_value = []
+        for node in nodes:
+            if node.NodeValue == val:
+                nodes_by_value.append(node)
+
+        return nodes_by_value
 
     def MoveNode(self, OriginalNode, NewParent):
-        # ваш код перемещения узла вместе с его поддеревом --
-        # в качестве дочернего для узла NewParent
-        pass
+        try:
+            OriginalNode.Parent.Children.remove(OriginalNode)
+            OriginalNode.Parent = NewParent
+            NewParent.Children.append(OriginalNode)
+        except (ValueError, AttributeError) as errors:
+            return
 
     def Count(self):
-        # количество всех узлов в дереве
-        return 0
+        return len(self.GetAllNodes())
 
     def LeafCount(self):
-        # количество листьев в дереве
-        return 0
+        return len([node for node in self.GetAllNodes() if node.Children == []])
