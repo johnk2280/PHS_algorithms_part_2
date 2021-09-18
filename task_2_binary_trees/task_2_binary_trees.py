@@ -49,17 +49,71 @@ class BST:
         return search_result
 
     def AddKeyValue(self, key, val):
-        # добавляем ключ-значение в дерево
-        return False  # если ключ уже есть
+        search_result = self.FindNodeByKey(key)
+        if search_result.NodeHasKey:
+            return False
+
+        if self.Root:
+            new_node = BSTNode(key, val, None)
+            if search_result.ToLeft:
+                search_result.Node.LeftChild = new_node
+            else:
+                search_result.Node.RightChild = new_node
+
+            new_node.Parent = search_result.Node
+        else:
+            self.Root = BSTNode(key, val, None)
 
     def FinMinMax(self, FromNode, FindMax):
-        # ищем максимальный/минимальный ключ в поддереве
-        # возвращается объект типа BSTNode
-        return None
+        if FromNode:
+            node = FromNode
+            if FindMax:
+                while True:
+                    if node.RightChild:
+                        node = node.RightChild
+                    else:
+                        return node
+            else:
+                while True:
+                    if node.LeftChild:
+                        node = node.LeftChild
+                    else:
+                        return node
 
     def DeleteNodeByKey(self, key):
-        # удаляем узел по ключу
-        return False  # если узел не найден
+        search_result = self.FindNodeByKey(key)
+        removed_node = search_result.Node
+        if not search_result.NodeHasKey:
+            return False
+
+        new_node = self.FinMinMax(removed_node.RightChild, False)
+
+        if new_node.RightChild:
+            new_node.RightChild.Parent = new_node.Parent
+
+        new_node.Parent.LeftChild = new_node.RightChild
+
+        new_node.Parent = removed_node.Parent
+        if removed_node.Parent:
+            if removed_node.Parent.NodeKey > removed_node.NodeKey:
+                removed_node.Parent.LeftChild = new_node
+            else:
+                removed_node.Parent.RightChild = new_node
+
+        if removed_node.LeftChild:
+            removed_node.LeftChild.Parent = new_node
+            new_node.LeftChild = removed_node.LeftChild
+
+        removed_node.RightChild.Parent = new_node
+        new_node.RightChild = removed_node.RightChild
 
     def Count(self):
-        return 0  # количество узлов в дереве
+        nodes = [self.Root, ]
+        for node in nodes:
+            if node.LeftChild:
+                nodes.append(node.LeftChild)
+
+            if node.RightChild:
+                nodes.append(node.RightChild)
+
+        return len(nodes)

@@ -29,6 +29,12 @@ class TestBinaryTree:
         assert search_result.NodeHasKey is True
         assert search_result.ToLeft is False
 
+        bst_2 = BST(None)
+        search_result = bst_2.FindNodeByKey(3)
+        assert search_result.Node is None
+        assert search_result.NodeHasKey is False
+        assert search_result.ToLeft is False
+
         # for insert to right
         search_result = self.bst.FindNodeByKey(8)
         assert search_result.Node == self.n_7
@@ -37,19 +43,62 @@ class TestBinaryTree:
 
         # for insert to left
         # self.bst.DeleteNodeByKey(5)
-        # search_result = self.bst.FindNodeByKey(5)
-        # assert search_result.Node == self.n_6
-        # assert search_result.NodeHasKey is False
-        # assert search_result.ToLeft is True
+        search_result = self.bst.FindNodeByKey(0)
+        assert search_result.Node == self.n_1
+        assert search_result.NodeHasKey is False
+        assert search_result.ToLeft is True
 
     def test_AddKeyValue(self):
-        pass
+        assert self.bst.AddKeyValue(5, '5') is False
 
-    def FinMinMax(self):
-        pass
+        bst_2 = BST(None)
+        bst_2.AddKeyValue(5, '5')
+        assert bst_2.Root.NodeKey == 5
+
+        # before adding
+        search_result = self.bst.FindNodeByKey(8)
+        assert search_result.Node == self.n_7
+        assert search_result.NodeHasKey is False
+        assert search_result.ToLeft is False
+
+        self.bst.AddKeyValue(8, '8')
+
+        # after adding to right
+        search_result = self.bst.FindNodeByKey(8)
+        assert search_result.NodeHasKey is True
+        assert search_result.Node.Parent == self.n_7
+        assert self.n_7.RightChild == search_result.Node
+
+        self.bst.AddKeyValue(0, '0')
+
+        # after adding to left
+        search_result = self.bst.FindNodeByKey(8)
+        assert search_result.NodeHasKey is True
+        assert search_result.Node.Parent == self.n_7
+        assert self.n_7.RightChild == search_result.Node
+
+    def test_FinMinMax(self):
+        max_result = self.bst.FinMinMax(self.n_4, True)
+        assert max_result.NodeKey == 8
+
+        max_result = self.bst.FinMinMax(self.n_2, True)
+        assert max_result == self.n_3
+
+        min_result = self.bst.FinMinMax(self.n_4, False)
+        assert min_result.NodeKey == 0
+
+        min_result = self.bst.FinMinMax(self.n_6, False)
+        assert min_result == self.n_5
 
     def test_DeleteNodeByKey(self):
-        pass
+        assert self.bst.DeleteNodeByKey(9) is False
+
+        self.bst.DeleteNodeByKey(4)
+        assert self.n_5.LeftChild == self.n_2
+        assert self.n_2.Parent == self.n_5
+        assert self.n_5.RightChild == self.n_6
+        assert self.n_6.Parent == self.n_5
+        assert self.n_6.LeftChild is None
 
     def test_Count(self):
-        pass
+        assert self.bst.Count() == 8
