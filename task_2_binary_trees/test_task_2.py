@@ -99,6 +99,15 @@ class TestBinaryTree:
         assert self.n_5.RightChild == self.n_6
         assert self.n_6.Parent == self.n_5
         assert self.n_6.LeftChild is None
+        assert self.bst.Root == self.n_5
+
+        n_10 = BSTNode(10, '10', None)
+        bst_2 = BST(n_10)
+
+        assert bst_2.DeleteNodeByKey(11) is False
+
+        bst_2.DeleteNodeByKey(10)
+        assert bst_2.Root is None
 
     def test_Count(self):
         assert self.bst.Count() == 8

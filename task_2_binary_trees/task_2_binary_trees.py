@@ -88,24 +88,30 @@ class BST:
 
         new_node = self.FinMinMax(removed_node.RightChild, False)
 
-        if new_node.RightChild:
-            new_node.RightChild.Parent = new_node.Parent
+        if removed_node is self.Root:
+            self.Root = new_node
 
-        new_node.Parent.LeftChild = new_node.RightChild
+        if new_node:
+            if new_node.RightChild:
+                new_node.RightChild.Parent = new_node.Parent
 
-        new_node.Parent = removed_node.Parent
-        if removed_node.Parent:
-            if removed_node.Parent.NodeKey > removed_node.NodeKey:
-                removed_node.Parent.LeftChild = new_node
-            else:
-                removed_node.Parent.RightChild = new_node
+            new_node.Parent.LeftChild = new_node.RightChild
 
-        if removed_node.LeftChild:
-            removed_node.LeftChild.Parent = new_node
-            new_node.LeftChild = removed_node.LeftChild
+            new_node.Parent = removed_node.Parent
+            if removed_node.Parent:
+                if removed_node.Parent.NodeKey > removed_node.NodeKey:
+                    removed_node.Parent.LeftChild = new_node
+                else:
+                    removed_node.Parent.RightChild = new_node
 
-        removed_node.RightChild.Parent = new_node
-        new_node.RightChild = removed_node.RightChild
+            if removed_node.LeftChild:
+                removed_node.LeftChild.Parent = new_node
+                new_node.LeftChild = removed_node.LeftChild
+
+            removed_node.RightChild.Parent = new_node
+            new_node.RightChild = removed_node.RightChild
+        else:
+            self.Root = None
 
     def Count(self):
         nodes = [self.Root, ]
