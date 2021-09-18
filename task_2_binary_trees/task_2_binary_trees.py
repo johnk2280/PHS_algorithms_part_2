@@ -25,8 +25,28 @@ class BST:
         self.Root = node  # корень дерева, или None
 
     def FindNodeByKey(self, key):
-        # ищем в дереве узел и сопутствующую информацию по ключу
-        return None  # возвращает BSTFind
+        node = self.Root
+        search_result = BSTFind()
+        if self.Root:
+            while True:
+                if key == node.NodeKey:
+                    search_result.NodeHasKey = True
+                    break
+                elif key > node.NodeKey:
+                    if node.RightChild:
+                        node = node.RightChild
+                    else:
+                        break
+                else:
+                    if node.LeftChild:
+                        node = node.LeftChild
+                    else:
+                        search_result.ToLeft = True
+                        break
+
+            search_result.Node = node
+
+        return search_result
 
     def AddKeyValue(self, key, val):
         # добавляем ключ-значение в дерево
