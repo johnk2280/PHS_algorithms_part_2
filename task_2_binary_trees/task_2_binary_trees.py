@@ -82,51 +82,59 @@ class BST:
 
     def DeleteNodeByKey(self, key):
         search_result = self.FindNodeByKey(key)
-        removed_node = search_result.Node
         if not search_result.NodeHasKey:
             return False
 
-        if removed_node.RightChild:
-            new_node = self.FinMinMax(removed_node.RightChild, False)
-            if new_node.Parent == removed_node:
-                new_node.LeftChild = removed_node.LeftChild
-                removed_node.LeftChild.Parent = new_node
-            else:
-                if new_node.RightChild:
-                    new_node.RightChild.Parent = new_node.Parent
+        removed_node = search_result.Node
 
-                new_node.Parent.LeftChild = new_node.RightChild
-                new_node.LeftChild = removed_node.LeftChild
-                removed_node.LeftChild.Parent = new_node
-                new_node.RightChild = removed_node.RightChild
-                removed_node.RightChild.Parent = new_node
-
-            new_node.Parent = removed_node.Parent
-            if new_node.Parent:
-                if new_node.NodeKey > new_node.Parent.NodeKey:
-                    new_node.Parent.RightChild = new_node
-                else:
-                    new_node.Parent.LeftChild = new_node
-
-        elif removed_node.LeftChild:
-            new_node = removed_node.LeftChild
+        # удаляемый узел не имеет потомков
+        if not removed_node.LeftChild and not removed_node.RightChild:
             if removed_node.Parent:
-                removed_node.Parent.RightChild = new_node
-
-            new_node.Parent = removed_node.Parent
-        else:
-            new_node = None
-            if removed_node.Parent:
-                if removed_node.NodeKey > removed_node.Parent.NodeKey:
-                    removed_node.Parent.RightChild = None
-                else:
+                if removed_node.Parent.LeftChild == removed_node:
                     removed_node.Parent.LeftChild = None
+                else:
+                    removed_node.Parent.RightChild = None
+            else:
+                self.Root = None
 
-        if removed_node is self.Root:
-            self.Root = new_node
+        # удаляемый узел имеет только левого потомка
+        elif removed_node.LeftChild and not removed_node.RightChild:
+            if removed_node.Parent:
+                if removed_node.Parent.LeftChild == removed_node:
+                    removed_node.Parent.LeftChild = removed_node.LeftChild
+                else:
+                    removed_node.Parent.RightChild = removed_node.LeftChild
+            else:
+                self.Root = removed_node.LeftChild
 
-        removed_node.LeftChild = None
-        removed_node.RightChild = None
+            removed_node.LeftChild.Parent = removed_node.Parent
+
+        # удаляемый узел имеет првавого потомка, либо обоих потомков
+        elif removed_node.RightChild:
+            new_node = self.FinMinMax(removed_node.RightChild, False)
+
+            if new_node.RightChild:
+                new_node.RightChild.Parent = new_node.Parent
+
+            new_node.Parent.LeftChild = new_node.RightChild
+            new_node.RightChild = removed_node.RightChild
+            removed_node.RightChild.Parent = new_node
+
+            if removed_node.LeftChild:
+                removed_node.LeftChild.Parent = new_node
+                new_node.LeftChild = removed_node.LeftChild
+
+            if removed_node.Parent:
+                if removed_node.Parent.LeftChild == removed_node:
+                    removed_node.Parent.LeftChild = new_node
+                else:
+                    removed_node.Parent.RightChild = new_node
+            else:
+                self.Root = new_node
+
+            removed_node.RightChild = None
+            removed_node.LeftChild = None
+
         removed_node.Parent = None
 
     def Count(self):
