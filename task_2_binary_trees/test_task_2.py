@@ -193,6 +193,13 @@ class TestBinaryTree:
         self.bst.DeleteNodeByKey(1)
 
         self.bst.DeleteNodeByKey(7)
+        assert self.bst.Root == self.n_5
+        assert self.n_5.RightChild is None
+        assert self.n_5.LeftChild is None
+        assert self.n_7.Parent is None
+        assert self.n_7.LeftChild is None
+        assert self.n_7.RightChild is None
+        assert self.n_1.Parent is None
 
         self.bst.DeleteNodeByKey(5)
         assert self.bst.Root is None
