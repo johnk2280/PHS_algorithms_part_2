@@ -64,6 +64,8 @@ class BST:
         else:
             self.Root = BSTNode(key, val, None)
 
+        return True
+
     def FinMinMax(self, FromNode, FindMax):
         if FromNode:
             node = FromNode
