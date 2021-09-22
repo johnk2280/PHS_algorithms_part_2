@@ -89,49 +89,43 @@ class BST:
 
         # удаляемый узел не имеет потомков
         if not removed_node.LeftChild and not removed_node.RightChild:
-            if removed_node.Parent:
-                if removed_node.Parent.LeftChild == removed_node:
-                    removed_node.Parent.LeftChild = None
-                else:
-                    removed_node.Parent.RightChild = None
+            if removed_node.Parent.LeftChild == removed_node:
+                removed_node.Parent.LeftChild = None
             else:
-                self.Root = None
+                removed_node.Parent.RightChild = None
 
         # удаляемый узел имеет только левого потомка
         elif removed_node.LeftChild and not removed_node.RightChild:
-            if removed_node.Parent:
-                if removed_node.Parent.LeftChild == removed_node:
-                    removed_node.Parent.LeftChild = removed_node.LeftChild
-                else:
-                    removed_node.Parent.RightChild = removed_node.LeftChild
+            if removed_node.Parent.LeftChild == removed_node:
+                removed_node.Parent.LeftChild = removed_node.LeftChild
             else:
-                self.Root = removed_node.LeftChild
+                removed_node.Parent.RightChild = removed_node.LeftChild
 
             removed_node.LeftChild.Parent = removed_node.Parent
+            removed_node.LeftChild = None
 
+        # Здесь начинается непредсказуемое
         # удаляемый узел имеет првавого потомка, либо обоих потомков
         elif removed_node.RightChild:
             new_node = self.FinMinMax(removed_node.RightChild, False)
+            if removed_node.Parent.LeftChild == removed_node:
+                removed_node.Parent.LeftChild = new_node
+            else:
+                removed_node.Parent.RightChild = new_node
 
-            if new_node.RightChild:
-                new_node.RightChild.Parent = new_node.Parent
+            if removed_node.RightChild != new_node:
+                if new_node.RightChild:
+                    new_node.RightChild.Parent = new_node.Parent
 
-            new_node.Parent.LeftChild = new_node.RightChild
-            new_node.RightChild = removed_node.RightChild
-            removed_node.RightChild.Parent = new_node
+                new_node.Parent.LeftChild = new_node.RightChild
+                new_node.RightChild = removed_node.RightChild
+                removed_node.RightChild.Parent = new_node
 
             if removed_node.LeftChild:
                 removed_node.LeftChild.Parent = new_node
                 new_node.LeftChild = removed_node.LeftChild
 
-            if removed_node.Parent:
-                if removed_node.Parent.LeftChild == removed_node:
-                    removed_node.Parent.LeftChild = new_node
-                else:
-                    removed_node.Parent.RightChild = new_node
-            else:
-                self.Root = new_node
-
+            new_node.Parent = removed_node.Parent
             removed_node.RightChild = None
             removed_node.LeftChild = None
 
