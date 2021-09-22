@@ -95,7 +95,7 @@ class TestBinaryTree:
 
         assert self.bst.Count() == 9
 
-        assert self.bst.DeleteNodeByKey(3) is None
+        assert self.bst.DeleteNodeByKey(3) is True
         assert self.bst.Root == self.n_4
         assert self.n_2.RightChild is None
         assert self.n_2.LeftChild == self.n_1
@@ -106,7 +106,7 @@ class TestBinaryTree:
         assert self.n_1.RightChild is None
         assert self.bst.Count() == 8
 
-        assert self.bst.DeleteNodeByKey(2) is None
+        assert self.bst.DeleteNodeByKey(2) is True
         assert self.bst.Root == self.n_4
         assert self.n_2.Parent is None
         assert self.n_2.LeftChild is None
@@ -118,7 +118,7 @@ class TestBinaryTree:
         assert self.n_4.RightChild == self.n_6
         assert self.bst.Count() == 7
 
-        assert self.bst.DeleteNodeByKey(6) is None
+        assert self.bst.DeleteNodeByKey(6) is True
         assert self.bst.Root == self.n_4
         assert self.n_4.LeftChild == self.n_1
         assert self.n_4.RightChild == self.n_7
@@ -136,7 +136,7 @@ class TestBinaryTree:
         assert self.n_6.RightChild is None
         assert self.bst.Count() == 6
 
-        assert self.bst.DeleteNodeByKey(4) is None
+        assert self.bst.DeleteNodeByKey(4) is True
         assert self.n_5.LeftChild == self.n_1
         assert self.n_1.Parent == self.n_5
         assert self.n_1.LeftChild.NodeKey == 0
@@ -154,7 +154,7 @@ class TestBinaryTree:
         assert self.n_4.RightChild is None
         assert self.bst.Count() == 5
 
-        assert self.bst.DeleteNodeByKey(8) is None
+        assert self.bst.DeleteNodeByKey(8) is True
         assert self.n_5.LeftChild == self.n_1
         assert self.n_1.Parent == self.n_5
         assert self.n_1.LeftChild.NodeKey == 0
@@ -172,7 +172,7 @@ class TestBinaryTree:
         assert self.n_4.RightChild is None
         assert self.bst.Count() == 4
 
-        assert self.bst.DeleteNodeByKey(0) is None
+        assert self.bst.DeleteNodeByKey(0) is True
         assert self.n_5.LeftChild == self.n_1
         assert self.n_1.Parent == self.n_5
         assert self.n_1.LeftChild is None
@@ -192,7 +192,7 @@ class TestBinaryTree:
 
         self.bst.DeleteNodeByKey(1)
 
-        assert self.bst.DeleteNodeByKey(7) is None
+        assert self.bst.DeleteNodeByKey(7) is True
         assert self.bst.Root == self.n_5
         assert self.n_5.RightChild is None
         assert self.n_5.LeftChild is None
@@ -201,7 +201,7 @@ class TestBinaryTree:
         assert self.n_7.RightChild is None
         assert self.n_1.Parent is None
 
-        assert self.bst.DeleteNodeByKey(5) is None
+        assert self.bst.DeleteNodeByKey(5) is True
         assert self.bst.Root is None
         assert self.n_5.LeftChild is None
         assert self.n_5.RightChild is None

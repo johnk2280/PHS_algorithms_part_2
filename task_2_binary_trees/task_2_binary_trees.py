@@ -135,6 +135,8 @@ class BST:
 
         removed_node.Parent = None
 
+        return True
+
     def Count(self):
         nodes = []
         if self.Root:
