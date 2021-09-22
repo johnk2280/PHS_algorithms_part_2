@@ -205,6 +205,8 @@ class TestBinaryTree:
         assert self.bst.Root is None
         assert self.n_5.LeftChild is None
         assert self.n_5.RightChild is None
+        assert self.n_5.Parent is None
+        assert self.bst.Count() == 0
 
     def test_Count(self):
         bst_2 = BST(None)
