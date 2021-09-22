@@ -136,20 +136,69 @@ class TestBinaryTree:
         assert self.n_6.RightChild is None
         assert self.bst.Count() == 6
 
-        # self.bst.DeleteNodeByKey(4)
-        # assert self.n_5.LeftChild == self.n_1
-        # assert self.n_1.Parent == self.n_5
-        # assert self.n_5.RightChild == self.n_6
-        # assert self.n_6.Parent == self.n_5
-        # assert self.n_6.LeftChild is None
-        # assert self.bst.Root == self.n_5
-        # assert self.n_5.Parent is None
-        # assert self.n_4.Parent is None
-        # assert self.n_4.LeftChild is None
-        # assert self.n_4.RightChild is None
+        self.bst.DeleteNodeByKey(4)
+        assert self.n_5.LeftChild == self.n_1
+        assert self.n_1.Parent == self.n_5
+        assert self.n_1.LeftChild.NodeKey == 0
+        assert self.n_1.RightChild is None
+        assert self.n_5.RightChild == self.n_7
+        assert self.n_7.RightChild.NodeKey == 8
+        assert self.n_7.LeftChild is None
+        assert self.n_6.Parent is None
+        assert self.n_6.LeftChild is None
+        assert self.n_6.RightChild is None
+        assert self.bst.Root == self.n_5
+        assert self.n_5.Parent is None
+        assert self.n_4.Parent is None
+        assert self.n_4.LeftChild is None
+        assert self.n_4.RightChild is None
+        assert self.bst.Count() == 5
+
+        self.bst.DeleteNodeByKey(8)
+        assert self.n_5.LeftChild == self.n_1
+        assert self.n_1.Parent == self.n_5
+        assert self.n_1.LeftChild.NodeKey == 0
+        assert self.n_1.RightChild is None
+        assert self.n_5.RightChild == self.n_7
+        assert self.n_7.RightChild is None
+        assert self.n_7.LeftChild is None
+        assert self.n_6.Parent is None
+        assert self.n_6.LeftChild is None
+        assert self.n_6.RightChild is None
+        assert self.bst.Root == self.n_5
+        assert self.n_5.Parent is None
+        assert self.n_4.Parent is None
+        assert self.n_4.LeftChild is None
+        assert self.n_4.RightChild is None
+        assert self.bst.Count() == 4
+
+        self.bst.DeleteNodeByKey(0)
+        assert self.n_5.LeftChild == self.n_1
+        assert self.n_1.Parent == self.n_5
+        assert self.n_1.LeftChild is None
+        assert self.n_1.RightChild is None
+        assert self.n_5.RightChild == self.n_7
+        assert self.n_7.RightChild is None
+        assert self.n_7.LeftChild is None
+        assert self.n_6.Parent is None
+        assert self.n_6.LeftChild is None
+        assert self.n_6.RightChild is None
+        assert self.bst.Root == self.n_5
+        assert self.n_5.Parent is None
+        assert self.n_4.Parent is None
+        assert self.n_4.LeftChild is None
+        assert self.n_4.RightChild is None
+        assert self.bst.Count() == 3
+
+        self.bst.DeleteNodeByKey(1)
+
+        self.bst.DeleteNodeByKey(7)
+
+        self.bst.DeleteNodeByKey(5)
+        assert self.bst.Root is None
+        assert self.n_5.LeftChild is None
+        assert self.n_5.RightChild is None
 
     def test_Count(self):
-        # assert self.bst.Count() == 1
-        #
         bst_2 = BST(None)
         assert bst_2.Count() == 0
