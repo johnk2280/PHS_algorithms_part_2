@@ -155,5 +155,18 @@ class BST:
 
         return tuple(nodes)
 
-    def DeepAllNodes(self):
-        pass
+    def DeepAllNodes(self, order, node=None):
+        left_branch = []
+        right_branch = []
+        if not node:
+            return tuple()
+
+        left_branch.extend(self.DeepAllNodes(order, node.LeftChild))
+        right_branch.extend(self.DeepAllNodes(order, node.RightChild))
+
+        if order == 0:
+            return tuple(left_branch + [node] + right_branch)
+        elif order == 1:
+            return tuple(left_branch + right_branch + [node])
+        if order == 2:
+            return tuple([node] + left_branch + right_branch)
