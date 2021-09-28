@@ -90,6 +90,11 @@ class TestBinaryTree:
         min_result = self.bst.FinMinMax(self.n_6, False)
         assert min_result == self.n_5
 
+        n_0 = BSTNode(0, '0', None)
+        bst_1 = BST(n_0)
+        assert bst_1.FinMinMax(n_0.RightChild, True) is None
+        assert bst_1.FinMinMax(n_0.RightChild, False) is None
+
     def test_DeleteNodeByKey(self):
         assert self.bst.DeleteNodeByKey(9) is False
 

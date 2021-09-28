@@ -88,37 +88,23 @@ class BST:
             return False
 
         removed_node = search_result.Node
-        if not removed_node.LeftChild and not removed_node.RightChild:
-            if removed_node is not self.Root:
-                if removed_node.Parent.LeftChild == removed_node:
-                    removed_node.Parent.LeftChild = None
-                else:
-                    removed_node.Parent.RightChild = None
-            else:
-                self.Root = None
+        if removed_node.LeftChild and not removed_node.RightChild:
+            new_node = removed_node.LeftChild
+        else:
+            new_node = self.FinMinMax(removed_node.RightChild, False)
 
-        elif removed_node.LeftChild and not removed_node.RightChild:
-            if removed_node is not self.Root:
-                if removed_node.Parent.LeftChild == removed_node:
-                    removed_node.Parent.LeftChild = removed_node.LeftChild
-                else:
-                    removed_node.Parent.RightChild = removed_node.LeftChild
+        if removed_node is not self.Root:
+            if removed_node.Parent.LeftChild == removed_node:
+                removed_node.Parent.LeftChild = new_node
             else:
-                self.Root = removed_node.LeftChild
+                removed_node.Parent.RightChild = new_node
+        else:
+            self.Root = new_node
 
+        if removed_node.LeftChild and not removed_node.RightChild:
             removed_node.LeftChild.Parent = removed_node.Parent
             removed_node.LeftChild = None
-
         elif removed_node.RightChild:
-            new_node = self.FinMinMax(removed_node.RightChild, False)
-            if removed_node is not self.Root:
-                if removed_node.Parent.LeftChild == removed_node:
-                    removed_node.Parent.LeftChild = new_node
-                else:
-                    removed_node.Parent.RightChild = new_node
-            else:
-                self.Root = new_node
-
             if removed_node.RightChild != new_node:
                 if new_node.RightChild:
                     new_node.RightChild.Parent = new_node.Parent
@@ -136,7 +122,6 @@ class BST:
             removed_node.LeftChild = None
 
         removed_node.Parent = None
-
         return True
 
     def Count(self):
