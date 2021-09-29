@@ -155,18 +155,41 @@ class BST:
 
         return tuple(nodes)
 
-    def DeepAllNodes(self, order, node=None):
-        left_branch = []
-        right_branch = []
-        if not node:
-            return tuple()
+    def DeepAllNodes(self, order):
+        return tuple(self.DFS(order, self.Root))
 
-        left_branch.extend(self.DeepAllNodes(order, node.LeftChild))
-        right_branch.extend(self.DeepAllNodes(order, node.RightChild))
+    def DFS(self, order, node):
+        if not node:
+            return []
 
         if order == 0:
-            return tuple(left_branch + [node] + right_branch)
+            return self.DFS(order, node.LeftChild) + [node] + self.DFS(order, node.RightChild)
         elif order == 1:
-            return tuple(left_branch + right_branch + [node])
-        if order == 2:
-            return tuple([node] + left_branch + right_branch)
+            return self.DFS(order, node.LeftChild) + self.DFS(order, node.RightChild) + [node]
+        elif order == 2:
+            return [node] + self.DFS(order, node.LeftChild) + self.DFS(order, node.RightChild)
+
+    # def DeepAllNodes(self, order):
+    #     return [
+    #         tuple(self.InOrder(self.Root)),
+    #         tuple(self.PostOrder(self.Root)),
+    #         tuple(self.PreOrder(self.Root))
+    #     ][order]
+    #
+    # def InOrder(self, node):
+    #     if not node:
+    #         return []
+    #
+    #     return self.InOrder(node.LeftChild) + [node] + self.InOrder(node.RightChild)
+    #
+    # def PostOrder(self, node):
+    #     if not node:
+    #         return []
+    #
+    #     return self.PostOrder(node.LeftChild) + self.PostOrder(node.RightChild) + [node]
+    #
+    # def PreOrder(self, node):
+    #     if not node:
+    #         return []
+    #
+    #     return [node] + self.PreOrder(node.LeftChild) + self.PreOrder(node.RightChild)

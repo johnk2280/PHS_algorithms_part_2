@@ -106,32 +106,34 @@ def test_DeepAllNodes_tree_has_nodes():
     bst = BST(n_4)
 
     assert bst.Count() == 7
-    assert bst.DeepAllNodes(0, bst.Root) == (n_1, n_2, n_3, n_4, n_5, n_6, n_7)
-    assert bst.DeepAllNodes(1, bst.Root) == (n_1, n_3, n_2, n_5, n_7, n_6, n_4)
-    assert bst.DeepAllNodes(2, bst.Root) == (n_4, n_2, n_1, n_3, n_6, n_5, n_7)
+    assert bst.DeepAllNodes(0) == (n_1, n_2, n_3, n_4, n_5, n_6, n_7)
+    assert bst.DeepAllNodes(1) == (n_1, n_3, n_2, n_5, n_7, n_6, n_4)
+    assert bst.DeepAllNodes(2) == (n_4, n_2, n_1, n_3, n_6, n_5, n_7)
 
     bst.DeleteNodeByKey(4)
     assert bst.Count() == 6
-    assert bst.DeepAllNodes(0, bst.Root) == (n_1, n_2, n_3, n_5, n_6, n_7)
-    assert bst.DeepAllNodes(1, bst.Root) == (n_1, n_3, n_2, n_7, n_6, n_5)
-    assert bst.DeepAllNodes(2, bst.Root) == (n_5, n_2, n_1, n_3, n_6, n_7)
+    assert bst.DeepAllNodes(0) == (n_1, n_2, n_3, n_5, n_6, n_7)
+    assert bst.DeepAllNodes(1) == (n_1, n_3, n_2, n_7, n_6, n_5)
+    assert bst.DeepAllNodes(2) == (n_5, n_2, n_1, n_3, n_6, n_7)
 
 
 def test_DeepAllNodes_tree_has_no_nodes():
     bst = BST(None)
 
-    assert bst.DeepAllNodes(0, bst.Root) == tuple()
-    assert bst.DeepAllNodes(1, bst.Root) == tuple()
-    assert bst.DeepAllNodes(2, bst.Root) == tuple()
+    assert bst.DeepAllNodes(0) == tuple()
+    assert bst.DeepAllNodes(1) == tuple()
+    assert bst.DeepAllNodes(2) == tuple()
+    assert bst.Count() == 0
 
 
 def test_DeepAllNodes_tree_has_root_without_children():
     n_4 = BSTNode(4, '4', None)
     bst = BST(n_4)
 
-    assert bst.DeepAllNodes(0, bst.Root) == (n_4,)
-    assert bst.DeepAllNodes(1, bst.Root) == (n_4,)
-    assert bst.DeepAllNodes(2, bst.Root) == (n_4,)
+    assert bst.DeepAllNodes(0) == (n_4,)
+    assert bst.DeepAllNodes(1) == (n_4,)
+    assert bst.DeepAllNodes(2) == (n_4,)
+    assert bst.Count() == 1
 
 
 def test_DeepAllNodes_tree_has_root_with_left_children():
@@ -140,9 +142,10 @@ def test_DeepAllNodes_tree_has_root_with_left_children():
     n_4.LeftChild = n_2
     bst = BST(n_4)
 
-    assert bst.DeepAllNodes(0, bst.Root) == (n_2, n_4,)
-    assert bst.DeepAllNodes(1, bst.Root) == (n_2, n_4,)
-    assert bst.DeepAllNodes(2, bst.Root) == (n_4, n_2,)
+    assert bst.DeepAllNodes(0) == (n_2, n_4,)
+    assert bst.DeepAllNodes(1) == (n_2, n_4,)
+    assert bst.DeepAllNodes(2) == (n_4, n_2,)
+    assert bst.Count() == 2
 
 
 def test_DeepAllNodes_tree_has_root_with_right_children():
@@ -151,9 +154,10 @@ def test_DeepAllNodes_tree_has_root_with_right_children():
     n_4.RightChild = n_6
     bst = BST(n_4)
 
-    assert bst.DeepAllNodes(0, bst.Root) == (n_4, n_6,)
-    assert bst.DeepAllNodes(1, bst.Root) == (n_6, n_4,)
-    assert bst.DeepAllNodes(2, bst.Root) == (n_4, n_6,)
+    assert bst.DeepAllNodes(0) == (n_4, n_6,)
+    assert bst.DeepAllNodes(1) == (n_6, n_4,)
+    assert bst.DeepAllNodes(2) == (n_4, n_6,)
+    assert bst.Count() == 2
 
 
 def test_DeepAllNodes_tree_has_root_with_both_children():
@@ -164,6 +168,8 @@ def test_DeepAllNodes_tree_has_root_with_both_children():
     n_4.RightChild = n_6
     bst = BST(n_4)
 
-    assert bst.DeepAllNodes(0, bst.Root) == (n_2, n_4, n_6,)
-    assert bst.DeepAllNodes(1, bst.Root) == (n_2, n_6, n_4,)
-    assert bst.DeepAllNodes(2, bst.Root) == (n_4, n_2, n_6,)
+    assert bst.DeepAllNodes(0) == (n_2, n_4, n_6,)
+    assert bst.DeepAllNodes(1) == (n_2, n_6, n_4,)
+    assert bst.DeepAllNodes(2) == (n_4, n_2, n_6,)
+    assert bst.Count() == 3
+
