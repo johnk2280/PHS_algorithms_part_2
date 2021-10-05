@@ -38,12 +38,28 @@ def test_FindKeyIndex():
     assert a_bst_1.FindKeyIndex(11) == -5
     assert a_bst_1.FindKeyIndex(16) == -14
 
+    a_bst_2 = aBST(2)
+    a_bst_2.Tree = [8, 4, 12, 2, 6, 10, 14]
+    assert a_bst_2.FindKeyIndex(16) is None
 
-# def test_AddKey_with_None():
-#     a_bst = aBST(3)
-#     a_bst.Tree = [8, 4, 12, 2, 6, None, 14, 1, 3, None, 7, None, None, 13, None]
-#
-#     assert a_bst.AddKey(5) == [8, 4, 12, 2, 6, None, 14, 1, 3, 5, 7, None, None, 13, None]
-#     assert a_bst.AddKey(10) == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, None, None, 13, None]
-#     assert a_bst.AddKey(15) == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, None, None, 13, 15]
-#     # assert a_bst.AddKey(16) == -1
+
+def test_AddKey_with_None():
+    a_bst = aBST(3)
+    a_bst.Tree = [8, 4, 12, 2, 6, None, 14, 1, 3, None, 7, None, None, 13, None]
+
+    assert a_bst.AddKey(5) == 9
+    assert a_bst.Tree == [8, 4, 12, 2, 6, None, 14, 1, 3, 5, 7, None, None, 13, None]
+
+    assert a_bst.AddKey(10) == 5
+    assert a_bst.Tree == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, None, None, 13, None]
+
+    assert a_bst.AddKey(15) == 14
+    assert a_bst.Tree == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, None, None, 13, 15]
+
+    assert a_bst.AddKey(16) == -1
+
+    a_bst_1 = aBST(0)
+    assert a_bst_1.Tree == [None]
+
+    assert a_bst_1.AddKey(8) == 0
+    assert a_bst_1.Tree == [8]
