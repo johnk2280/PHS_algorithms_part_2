@@ -19,36 +19,31 @@ def test_tree_size():
     assert len(bst_4.Tree) == 2047
 
 
-@pytest.mark.parametrize(
-    'keys, expected_result',
-    [14, 2, 10, 3, 1, 7, 6, 4, 13, 0],
-    [0, 1, 2, 3, 4, None, 6, 7, None, None, 10, None, None, 13, 14],
-)
-def test_AddKey_with_None(keys, expected_result):
-    a_bst = aBST(3)
-    for key in keys:
-        a_bst.AddKey(key)
+def test_FindKeyIndex():
+    a_bst = aBST(0)
+    a_bst.Tree[0] = 55
+    assert a_bst.FindKeyIndex(55) == 0
+    assert a_bst.FindKeyIndex(5) is None
 
-    assert a_bst.Tree == expected_result
+    a_bst_1 = aBST(3)
+    assert a_bst_1.FindKeyIndex(12) == 0
 
-
-@pytest.mark.parametrize(
-    'keys, expected_result',
-    [55, 62, 25, 84, 37, 43, 31, 50, 84, 92],
-    [50, 25, 75, None, 37, 62, 84, None, None, 31, 43, 55, None, None, 92],
-)
-def test_AddKey_with_None_1(keys, expected_result):
-    a_bst = aBST(3)
-    for key in keys:
-        a_bst.AddKey(key)
-
-    assert a_bst.Tree == expected_result
+    a_bst_1.Tree = [8, 4, 12, 2, 6, None, 14, 1, 3, None, 7, None, None, 13, None]
+    assert a_bst_1.FindKeyIndex(14) == 6
+    assert a_bst_1.FindKeyIndex(7) == 10
+    assert a_bst_1.FindKeyIndex(4) == 1
+    assert a_bst_1.FindKeyIndex(10) == -5
+    assert a_bst_1.FindKeyIndex(5) == -9
+    assert a_bst_1.FindKeyIndex(9) == -5
+    assert a_bst_1.FindKeyIndex(11) == -5
+    assert a_bst_1.FindKeyIndex(16) == -14
 
 
-@pytest.mark.parametrize(
-    'keys, expected_result',
-    [],
-    [],
-)
-def test_AddKey_without_None(keys, expected_result):
-    pass
+# def test_AddKey_with_None():
+#     a_bst = aBST(3)
+#     a_bst.Tree = [8, 4, 12, 2, 6, None, 14, 1, 3, None, 7, None, None, 13, None]
+#
+#     assert a_bst.AddKey(5) == [8, 4, 12, 2, 6, None, 14, 1, 3, 5, 7, None, None, 13, None]
+#     assert a_bst.AddKey(10) == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, None, None, 13, None]
+#     assert a_bst.AddKey(15) == [8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, None, None, 13, 15]
+#     # assert a_bst.AddKey(16) == -1
