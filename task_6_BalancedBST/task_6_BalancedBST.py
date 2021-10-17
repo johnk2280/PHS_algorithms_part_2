@@ -46,6 +46,4 @@ class BalancedBST:
             diff -= 1
             self.IsBalanced(root_node.RightChild, diff)
 
-        # self.IsBalanced(root_node, diff)
-
         return 0 <= diff <= 1
