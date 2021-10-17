@@ -34,5 +34,18 @@ class BalancedBST:
         sub_tree_root.RightChild = self.GenerateTree(a[root_index + 1:], sub_tree_root, level)
         return sub_tree_root
 
-    def IsBalanced(self, root_node):
-        return False  # сбалансировано ли дерево с корнем root_node
+    def IsBalanced(self, root_node, diff=0):
+        if not root_node:
+            return False
+
+        if root_node.LeftChild:
+            diff += 1
+            self.IsBalanced(root_node.LeftChild, diff)
+
+        if root_node.RightChild:
+            diff -= 1
+            self.IsBalanced(root_node.RightChild, diff)
+
+        # self.IsBalanced(root_node, diff)
+
+        return 0 <= diff <= 1

@@ -134,3 +134,36 @@ def test_GenerateTree_with_equal_keys():
     assert bbst_1.Root.RightChild.RightChild.RightChild.NodeKey == 4
     assert bbst_1.Root.RightChild.RightChild.RightChild.RightChild.NodeKey == 4
     assert bbst_1.Root.RightChild.RightChild.RightChild.RightChild.RightChild is None
+
+
+def test_IsBalanced():
+    a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+    bbst = BalancedBST()
+    bbst.GenerateTree(a)
+
+    assert bbst.IsBalanced(bbst.Root) is True
+    assert bbst.IsBalanced(bbst.Root.LeftChild) is True
+    assert bbst.IsBalanced(bbst.Root.RightChild) is True
+    assert bbst.IsBalanced(bbst.Root.LeftChild.LeftChild) is True
+    assert bbst.IsBalanced(bbst.Root.LeftChild.RightChild) is True
+
+    a_2 = [1, 2, 4, 5, 6, 7, 11, 12, 14, 15]
+    bbst_2 = BalancedBST()
+    bbst_2.GenerateTree(a_2)
+    assert bbst_2.IsBalanced(bbst_2.Root) is True
+    assert bbst_2.IsBalanced(bbst_2.Root.LeftChild) is True
+    assert bbst_2.IsBalanced(bbst_2.Root.RightChild) is True
+    assert bbst_2.IsBalanced(bbst_2.Root.LeftChild.LeftChild) is True
+    assert bbst_2.IsBalanced(bbst_2.Root.LeftChild.RightChild) is True
+
+    a_3 = [2, 2, 2, 2, 2, 2]
+    bbst_3 = BalancedBST()
+    bbst_3.GenerateTree(a_3)
+    assert bbst_3.IsBalanced(bbst_3.Root) is False
+    assert bbst_3.IsBalanced(bbst_3.Root.LeftChild) is False
+    assert bbst_3.IsBalanced(bbst_3.Root.RightChild) is False
+
+    a_4 = [1, 1, 2, 2, 2, 2, 3, 4, 4, 4, 4]
+    bbst_4 = BalancedBST()
+    bbst_4.GenerateTree(a_4)
+    assert bbst_4.IsBalanced(bbst_4.Root) is False
