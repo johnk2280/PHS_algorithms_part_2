@@ -64,5 +64,47 @@ def test_Add():
     assert h_2.HeapArray == [11, 9, 6, 7, 8, 2, 5, 1, 4, 3, None, None, None, None, None]
 
 
+def test_GetMax():
+    a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11]
+    h = Heap()
+    h.MakeHeap(a, 1)
 
+    assert h.HeapArray == [3, 1, 2]
+    assert h.GetMax() == 3
+    assert h.HeapArray == [2, 1, None]
 
+    h_1 = Heap()
+    h_1.MakeHeap(a, 3)
+    assert h_1.HeapArray == [11, 9, 6, 7, 8, 2, 5, 1, 4, 3, None, None, None, None, None]
+    assert h_1.GetMax() == 11
+    assert h_1.HeapArray == [9, 8, 6, 7, 3, 2, 5, 1, 4, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 9
+    assert h_1.HeapArray == [8, 7, 6, 4, 3, 2, 5, 1, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 8
+    assert h_1.HeapArray == [7, 4, 6, 1, 3, 2, 5, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 7
+    assert h_1.HeapArray == [6, 4, 5, 1, 3, 2, None, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 6
+    assert h_1.HeapArray == [5, 4, 2, 1, 3, None, None, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 5
+    assert h_1.HeapArray == [4, 3, 2, 1, None, None, None, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 4
+    assert h_1.HeapArray == [3, 1, 2, None, None, None, None, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 3
+    assert h_1.HeapArray == [2, 1, None, None, None, None, None, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 2
+    assert h_1.HeapArray == [1, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == 1
+    assert h_1.HeapArray == [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+
+    assert h_1.GetMax() == -1
+    assert h_1.HeapArray == [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
