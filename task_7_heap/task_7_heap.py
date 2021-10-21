@@ -10,7 +10,7 @@ class Heap:
             self.Add(key)
 
     def GetMax(self):
-        if self.HeapArray[0] is None:
+        if not self.HeapArray or not self.HeapArray[0]:
             return -1  # если куча пуста
 
         largest_key = self.HeapArray[0]

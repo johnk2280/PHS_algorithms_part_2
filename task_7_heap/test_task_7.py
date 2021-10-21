@@ -136,3 +136,6 @@ def test_GetMax():
 
     assert h_2.GetMax() == -1
     assert h_2.HeapArray == [None, None, None, None, None, None, None]
+
+    h_3 = Heap()
+    h_3.GetMax()
