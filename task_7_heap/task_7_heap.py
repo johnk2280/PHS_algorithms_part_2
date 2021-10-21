@@ -51,8 +51,12 @@ class Heap:
 
     def _sift_down(self, index=0):
         root = self.HeapArray[index]
-        left_child = self.HeapArray[index * 2 + 1]
-        right_child = self.HeapArray[index * 2 + 2]
+        try:
+            left_child = self.HeapArray[index * 2 + 1]
+            right_child = self.HeapArray[index * 2 + 2]
+        except IndexError:
+            return
+
         if left_child and right_child:
             if left_child > right_child and left_child > root:
                 self.HeapArray[index * 2 + 1], self.HeapArray[index] = self.HeapArray[index], self.HeapArray[index * 2 + 1]

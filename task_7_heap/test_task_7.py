@@ -140,3 +140,18 @@ def test_GetMax():
     h_3 = Heap()
     assert h_3.GetMax() == -1
 
+    h_4 = Heap()
+    h_4.MakeHeap(a, 0)
+
+    assert h_4.HeapArray == [1, ]
+    assert h_4.GetMax() == 1
+    assert h_4.HeapArray == [None, ]
+    assert h_4.GetMax() == -1
+    assert h_4.HeapArray == [None, ]
+
+    h_5 = Heap()
+    h_5.MakeHeap([1, 2], 1)
+    assert h_5.HeapArray == [2, 1, None]
+    assert h_5.GetMax() == 2
+    assert h_5.HeapArray == [1, None, None]
+
