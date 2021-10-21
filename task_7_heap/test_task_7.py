@@ -108,3 +108,31 @@ def test_GetMax():
 
     assert h_1.GetMax() == -1
     assert h_1.HeapArray == [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+
+    h_2 = Heap()
+    h_2.MakeHeap(a, 2)
+    assert h_2.HeapArray == [7, 4, 6, 1, 3, 2, 5]
+
+    assert h_2.GetMax() == 7
+    assert h_2.HeapArray == [6, 4, 5, 1, 3, 2, None]
+
+    assert h_2.GetMax() == 6
+    assert h_2.HeapArray == [5, 4, 2, 1, 3, None, None]
+
+    assert h_2.GetMax() == 5
+    assert h_2.HeapArray == [4, 3, 2, 1, None, None, None]
+
+    assert h_2.GetMax() == 4
+    assert h_2.HeapArray == [3, 1, 2, None, None, None, None]
+
+    assert h_2.GetMax() == 3
+    assert h_2.HeapArray == [2, 1, None, None, None, None, None]
+
+    assert h_2.GetMax() == 2
+    assert h_2.HeapArray == [1, None, None, None, None, None, None]
+
+    assert h_2.GetMax() == 1
+    assert h_2.HeapArray == [None, None, None, None, None, None, None]
+
+    assert h_2.GetMax() == -1
+    assert h_2.HeapArray == [None, None, None, None, None, None, None]

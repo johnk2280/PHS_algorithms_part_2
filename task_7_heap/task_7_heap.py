@@ -14,7 +14,7 @@ class Heap:
             return -1  # если куча пуста
 
         largest_key = self.HeapArray[0]
-        edge_key_index = self.HeapArray.index(None) - 1 if None in self.HeapArray else self.HeapArray[-1]
+        edge_key_index = self.HeapArray.index(None) - 1 if None in self.HeapArray else len(self.HeapArray) - 1
         self.HeapArray[0] = self.HeapArray[edge_key_index]
         self.HeapArray[edge_key_index] = None
         self._sift_down()
