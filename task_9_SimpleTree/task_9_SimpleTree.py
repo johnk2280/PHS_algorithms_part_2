@@ -23,8 +23,12 @@ class SimpleTree:
         except (ValueError, AttributeError) as errors:
             return
 
-    def GetAllNodes(self):
-        nodes = [self.Root, ]
+    def GetAllNodes(self, root=None):
+        if root is None:
+            root = self.Root
+
+        # TODO: тест для обновленного метода
+        nodes = [root, ]
         for node in nodes:
             if node.Children:
                 nodes.extend(node.Children)
@@ -54,5 +58,12 @@ class SimpleTree:
     def LeafCount(self):
         return len([node for node in self.GetAllNodes() if node.Children == []])
 
-    def EvenTrees(self):
+    def EvenTrees(self, root=None):
+        if root is None:
+            root = self.Root
+
+        sub_tree = self.GetAllNodes()
+        if len(sub_tree) % 2 == 0:
+            pass
+
         return []
