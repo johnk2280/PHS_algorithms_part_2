@@ -25,3 +25,10 @@ def test_EvenTree():
     st.AddChild(c, g)
 
     assert st.GetAllNodes() == [r, a, c, h, b, e, d, g, m, f, ]
+    assert st.GetAllNodes(a) == [a, b, e, f, ]
+    assert st.GetAllNodes(c) == [c, d, g, ]
+    assert st.GetAllNodes(h) == [h, m, ]
+    assert st.GetAllNodes(f) == [f, ]
+
+    assert st.EvenTrees() == []
+    print(1)

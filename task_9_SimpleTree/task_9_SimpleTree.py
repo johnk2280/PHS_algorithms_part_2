@@ -27,7 +27,6 @@ class SimpleTree:
         if root is None:
             root = self.Root
 
-        # TODO: тест для обновленного метода
         nodes = [root, ]
         for node in nodes:
             if node.Children:
@@ -58,12 +57,18 @@ class SimpleTree:
     def LeafCount(self):
         return len([node for node in self.GetAllNodes() if node.Children == []])
 
-    def EvenTrees(self, root=None):
+    def EvenTrees(self, root=None, roots: list = None):
+        if roots is None:
+            roots = []
+
         if root is None:
             root = self.Root
 
-        sub_tree = self.GetAllNodes()
-        if len(sub_tree) % 2 == 0:
-            pass
-
-        return []
+        sub_tree = self.GetAllNodes(root)
+        if len(sub_tree) % 2 != 0:
+            return []
+        elif len(sub_tree) == 2:
+            return [root, ]
+        else:
+            for child in sub_tree[1:]:
+                self.EvenTrees(child)
