@@ -46,6 +46,12 @@ def test_EvenTree():
     assert st.GetAllNodes() == [r, a, c, h, b, g]
     assert st.EvenTrees() == [r, a, r, c]
 
+    st.DeleteNode(c)
+    st.DeleteNode(g)
+    assert st.GetAllNodes() == [r, a, h, b]
+    assert st.EvenTrees() == [r, a]
+
+
     st_1 = SimpleTree(None)
     assert st_1.EvenTrees() == []
     assert st_1.Count() == 0

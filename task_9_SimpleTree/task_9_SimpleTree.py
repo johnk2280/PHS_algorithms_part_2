@@ -60,12 +60,12 @@ class SimpleTree:
         return len([node for node in self.GetAllNodes() if node.Children == []])
 
     def EvenTrees(self):
-        sub_tree = self.GetAllNodes()
-        if len(sub_tree) % 2 != 0:
+        tree = self.GetAllNodes()
+        if len(tree) % 2 != 0 or self.Root is None:
             return []
 
         even_trees_roots = []
-        nodes = self.Root.Children.copy() if self.Root else []
+        nodes = self.Root.Children.copy()
         for node in nodes:
             if len(self.GetAllNodes(node)) % 2 == 0:
                 even_trees_roots.append(node.Parent)
