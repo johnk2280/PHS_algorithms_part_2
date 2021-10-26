@@ -27,10 +27,12 @@ class SimpleTree:
         if root is None:
             root = self.Root
 
-        nodes = [root, ]
-        for node in nodes:
-            if node.Children:
-                nodes.extend(node.Children)
+        nodes = []
+        if root is not None:
+            nodes.append(root)
+            for node in nodes:
+                if node.Children:
+                    nodes.extend(node.Children)
 
         return nodes
 
@@ -57,18 +59,18 @@ class SimpleTree:
     def LeafCount(self):
         return len([node for node in self.GetAllNodes() if node.Children == []])
 
-    def EvenTrees(self, root=None, roots: list = None):
-        if roots is None:
-            roots = []
-
-        if root is None:
-            root = self.Root
-
-        sub_tree = self.GetAllNodes(root)
+    def EvenTrees(self):
+        sub_tree = self.GetAllNodes()
         if len(sub_tree) % 2 != 0:
             return []
-        elif len(sub_tree) == 2:
-            return [root, ]
-        else:
-            for child in sub_tree[1:]:
-                self.EvenTrees(child)
+
+        even_trees_roots = []
+        nodes = self.Root.Children.copy() if self.Root else []
+        for node in nodes:
+            if len(self.GetAllNodes(node)) % 2 == 0:
+                even_trees_roots.append(node.Parent)
+                even_trees_roots.append(node)
+                nodes.extend(node.Children)
+
+        return even_trees_roots
+
