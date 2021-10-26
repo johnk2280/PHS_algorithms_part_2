@@ -59,7 +59,20 @@ class SimpleGraph:
             return
 
     def DepthFirstSearch(self, VFrom, VTo):
+        stack = []
+        self.vertex[VFrom].Hit = True
+        neighbors = self.m_adjacency[VFrom]
+        if self.vertex[VFrom] is self.vertex[VTo] or self.vertex[VTo] in self.m_adjacency[VFrom]:
+            self.vertex[VTo].Hit = True
+            return [self.vertex[VTo], ]
+
+        stack.append(self.vertex[VFrom])
+        for i in range(len(neighbors)):
+            if neighbors[i] and self.vertex[i].Hit is False:
+                stack.extend(self.DepthFirstSearch(i, VTo))
+
+        return stack
+
         # узлы задаются позициями в списке vertex
         # возвращается список узлов -- путь из VFrom в VTo
         # или [] если пути нету
-        pass
