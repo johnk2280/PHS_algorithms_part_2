@@ -58,21 +58,31 @@ class SimpleGraph:
         except ValueError:
             return
 
-    def DepthFirstSearch(self, VFrom, VTo):
-        stack = []
-        self.vertex[VFrom].Hit = True
-        neighbors = self.m_adjacency[VFrom]
-        if self.vertex[VFrom] is self.vertex[VTo] or self.vertex[VTo] in self.m_adjacency[VFrom]:
-            self.vertex[VTo].Hit = True
-            return [self.vertex[VTo], ]
+    def DepthFirstSearch(self, VFrom, VTo, stack=None):
+        if stack is None:
+            self._clear_visit_flag()
+            stack = []
 
-        stack.append(self.vertex[VFrom])
-        for i in range(len(neighbors)):
-            if neighbors[i] and self.vertex[i].Hit is False:
-                stack.extend(self.DepthFirstSearch(i, VTo))
+        try:
+            self.vertex[VFrom].Hit = True
+            stack.append(self.vertex[VFrom])
+            if self.m_adjacency[VFrom][VTo]:
+                self.vertex[VTo].Hit = True
+                stack.append(self.vertex[VTo])
+            else:
+                for i in range(len(self.m_adjacency[VFrom])):
+                    if self.m_adjacency[VFrom][i] and not self.vertex[i].Hit:
+                        stack = self.DepthFirstSearch(i, VTo, stack)
+                        if stack[-1] is self.vertex[VTo]:
+                            break
 
-        return stack
+                if stack[-1] is not self.vertex[VTo]:
+                    stack.pop()
 
-        # узлы задаются позициями в списке vertex
-        # возвращается список узлов -- путь из VFrom в VTo
-        # или [] если пути нету
+            return stack
+        except (IndexError, TypeError) as errors:
+            return
+
+    def _clear_visit_flag(self):
+        for v in self.vertex:
+            v.Hit = False
