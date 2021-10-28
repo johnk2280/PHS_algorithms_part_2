@@ -84,9 +84,11 @@ class SimpleGraph:
             return
 
     def BreadthFirstSearch(self, VFrom, VTo):
-        queue = []
-        parents = []
         self._clear_visit_flag()
+        queue = self._set_queue(VFrom)
+        parents = self._set_parents(VFrom)
+        self.vertex[VFrom].Hit = True
+
         # узлы задаются позициями в списке vertex
         # возвращается список узлов -- путь из VFrom в VTo
         # или [] если пути нету
@@ -95,3 +97,22 @@ class SimpleGraph:
     def _clear_visit_flag(self):
         for v in self.vertex:
             v.Hit = False
+
+    def _set_queue(self, VFrom: int, queue: list = None) -> list:
+        if queue is None:
+            queue = []
+
+        neighbors = self.m_adjacency[VFrom]
+        queue.extend([i for i in range(len(neighbors)) if neighbors[i]])
+        return queue
+
+    def _set_parents(self, VFrom: int, parents: list = None) -> list:
+        if parents is None:
+            parents = [None] * self.max_vertex
+
+        neighbors = self.m_adjacency[VFrom]
+        for i in range(len(neighbors)):
+            if neighbors[i]:
+                parents[i] = VFrom
+
+        return parents
