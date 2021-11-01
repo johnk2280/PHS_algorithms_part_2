@@ -84,57 +84,64 @@ class SimpleGraph:
             return
 
     def BreadthFirstSearch(self, VFrom, VTo):
-        search_result = []
-        current_vertex = None
         self._clear_visit_flag()
+        search_result = []
+        parents = [None] * self.max_vertex
+        q = [VFrom]
+        self.vertex[VFrom].Hit = True
+        while len(q) > 0:
+            current_vertex = q.pop(0)
+            if current_vertex == VTo:
+                break
 
-        try:
-            queue = self._set_queue(VFrom)
-            parents = self._set_parents(VFrom)
-            self.vertex[VFrom].Hit = True
-            while queue:
-                current_vertex = queue.pop(0)
-                self.vertex[current_vertex].Hit = True
-                parents = self._set_parents(current_vertex, parents)
-                if current_vertex == VTo:
-                    break
-                elif self.m_adjacency[current_vertex][VTo]:
-                    search_result.append(self.vertex[current_vertex])
-                    break
+            for i, neighbor in enumerate(self.m_adjacency[current_vertex]):
+                if neighbor and not self.vertex[i].Hit:
+                    self.vertex[i].Hit = True
+                    parents[i] = current_vertex
+                    q.append(i)
+
+        else:
+            return []
+
+        parent = parents[current_vertex]
+        while parent is not None:
+            search_result.insert(0, self.vertex[parent])
+            parent = parents[parent]
+
+        search_result.append(self.vertex[VTo])
+        return search_result
+
+    def WeakVertices(self):
+        self._clear_visit_flag()
+        search_result = []
+        q = [0, ]
+        self.vertex[0].Hit = True
+        while len(q) > 0:
+            current_vertex = q.pop(0)
+            neighbors = []
+            for i, neighbor in enumerate(self.m_adjacency[current_vertex]):
+                if neighbor:
+                    neighbors.append(i)
+                    if not self.vertex[i].Hit:
+                        self.vertex[i].Hit = True
+                        q.append(i)
+
+            if len(neighbors) >= 2:
+                for neighbor_1, neighbor_2 in self._get_pair(neighbors):
+                    if self.IsEdge(neighbor_1, neighbor_2):
+                        break
                 else:
-                    queue = self._set_queue(current_vertex, queue)
+                    search_result.append(self.vertex[current_vertex])
+            else:
+                search_result.append(self.vertex[current_vertex])
 
-            search_result.append(self.vertex[VTo])
-            parent = parents[current_vertex]
-            while parent is not None:
-                search_result.insert(0, self.vertex[parent])
-                parent = parents[parent]
+        return search_result
 
-            return search_result
-        except (IndexError, TypeError) as errors:
-            return
+    def _get_pair(self, neighbors):
+        for i in range(len(neighbors)):
+            for j in range(i + 1, len(neighbors)):
+                yield neighbors[i], neighbors[j]
 
     def _clear_visit_flag(self):
         for v in self.vertex:
             v.Hit = False
-
-    def _set_queue(self, VFrom: int, queue: list = None) -> list:
-        if queue is None:
-            queue = []
-
-        neighbors = self.m_adjacency[VFrom]
-        queue.extend([
-            i for i in range(len(neighbors)) if neighbors[i] and not self.vertex[i].Hit
-        ])
-        return queue
-
-    def _set_parents(self, VFrom: int, parents: list = None) -> list:
-        if parents is None:
-            parents = [None] * self.max_vertex
-
-        neighbors = self.m_adjacency[VFrom]
-        for i in range(len(neighbors)):
-            if neighbors[i] and not self.vertex[i].Hit:
-                parents[i] = VFrom
-
-        return parents
